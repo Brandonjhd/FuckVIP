@@ -1,0 +1,41 @@
+#!name=FuckAppsVIP
+#!desc=Endel / AdGuard / 掃描全能王 / 有道詞典 / 百度云 / 地震預警ICL / Spotify / 句读
+#!author=ddgksf2013 / yqc007 / NobyDa / app2smile / Yu9191 / 89996462
+
+[Rule]
+
+[URL Rewrite]
+# > Spotify
+^https?:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/user-customization-service\/v1\/customize$ header-del if-none-match
+
+[Body Rewrite]
+
+[Script]
+# > Endel
+Endel-Unlock = type=http-response, pattern=^https:\/\/api-production\.endel\.io\/v4\/call, requires-body=1, script-path=https://ddgksf2013.top/scripts/endel.vip.js
+
+# > AdGuard
+AdGuard-Unlock = type=http-response, pattern=^https?:\/\/mobile-api\.adguard\.org\/api\/.+\/ios_validate_receipt, requires-body=1, script-path=https://raw.githubusercontent.com/yqc007/QuantumultX/master/AdGuardProCrack.js
+
+# > 掃描全能王
+CamScanner-Unlock = type=http-response, pattern=https?:\/\/(api|api-cs)\.intsig\.net\/purchase\/cs\/query_property\?, requires-body=1, script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Surge/JS/CamScanner.js
+
+# > 有道詞典
+YoudaoDict-Unlock = type=http-response, pattern=^https:\/\/dict\.youdao\.com\/vip\/user\/status, requires-body=1, script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/wyydcd.js
+
+# > 百度云
+BaiduCloud-Unlock = type=http-response, pattern=https?:\/\/pan\.baidu\.com\/rest\/2\.0\/membership\/user, requires-body=1, script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Surge/JS/BaiduCloud.js
+
+# > 地震預警ICL
+ICL-Unlock = type=http-response, pattern=https?:\/\/mobile-new\.chinaeew\.cn\/v1\/order\/apple\/vip, requires-body=1, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/dzyj.js
+
+# > Spotify
+Spotify-Header = type=http-request, pattern=^https?:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/user-customization-service\/v1\/customize$, requires-body=0, script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-qx-header.js
+Spotify-Proto = type=http-response, pattern=^https?:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$, requires-body=1, binary-body-mode=1, script-update-interval=0, script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-proto.js
+Spotify-JSON = type=http-request, pattern=^https?:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/, requires-body=0, script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-json.js
+
+# > 句读
+Judou-Unlock = type=http-response, pattern=https://judouapp.com/api/v2/mine/profile, requires-body=1, script-path=https://ddgksf2013.top/scripts/judou.vip.js
+
+[MITM]
+hostname = %APPEND% api-production.endel.io, mobile-api.adguard.org, *.intsig.net, dict.youdao.com, pan.baidu.com, mobile-new.chinaeew.cn, spclient.wg.spotify.com, *spclient.spotify.com, judouapp.com
