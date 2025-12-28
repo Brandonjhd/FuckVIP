@@ -1,12 +1,12 @@
 #!name=FuckAppsVIP
-#!desc=Endel / AdGuard / 掃描全能王 / 有道詞典 / 百度云 / 地震預警ICL / Spotify
-#!author=ddgksf2013 / yqc007 / NobyDa / app2smile / Yu9191 / 89996462
+#!desc=Endel / AdGuard / 掃描全能王 / 有道詞典 / 百度云 / 地震預警ICL / Spotify / 酷我音乐
+#!author=ddgksf2013 / yqc007 / NobyDa / app2smile / Yu9191 / 89996462 / 𝐎𝐍𝐙𝟑𝐕
 
 [Rule]
 
 [URL Rewrite]
 # > Spotify
-^https?:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/user-customization-service\/v1\/customize$ header-del if-none-match
+^https?:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/user-customization-service\/v1\/customize$ - header-del if-none-match
 
 [Body Rewrite]
 
@@ -34,5 +34,18 @@ Spotify-Header = type=http-request, pattern=^https?:\/\/(spclient\.wg\.spotify\.
 Spotify-Proto = type=http-response, pattern=^https?:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$, requires-body=1, binary-body-mode=1, script-update-interval=0, script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-proto.js
 Spotify-JSON = type=http-request, pattern=^https?:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/, requires-body=0, script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-json.js
 
+# > 酷我音乐
+Kuwo-ModifyVIPInfo = type=http-response, pattern=^https?://vip1.kuwo.cn/vip/enc/user/vip, requires-body=1, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
+Kuwo-ModifyMusicInfo = type=http-request, pattern=^https?://music(pay)?.kuwo.cn/music.pay?newver=3, requires-body=1, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
+Kuwo-ModifyPlayInterface = type=http-response, pattern=^https?://.+.kuwo.cn/mobi.s?f=kwxs&q=, requires-body=1, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
+Kuwo-AudiobookFakeVIP = type=http-response, pattern=^https?://tingshu.kuwo.cn/api/v2/pay/app/getConfigInfo, requires-body=1, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
+Kuwo-AudiobookListBanner = type=http-response, pattern=^https?://tingshu.kuwo.cn/v2/api/pay/payInfo/kwplayer/payMiniBar, requires-body=1, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
+Kuwo-ModifyAudiobookInfo = type=http-request, pattern=^https?://audiobookpay.kuwo.cn/a.p?simpleToken=1, requires-body=1, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
+Kuwo-ModifyComicInfo = type=http-response, pattern=^https?://audiobookpay.kuwo.cn/a.p?newver=3, requires-body=1, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
+Kuwo-UnlockVIPTheme = type=http-response, pattern=^https?://vip1.kuwo.cn/(commercia/)?vip/(v2/theme?op=gd|(player/getStyleListByModel|hanger/wear)), requires-body=1, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
+Kuwo-UnlockVIPInfo = type=http-response, pattern=^https?://vip1.kuwo.cn/vip/v2/user/vip, requires-body=1, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
+Kuwo-RemoveDressBanner = type=http-response, pattern=^https?://vip1.kuwo.cn/commercia/vip/dressCenter/getTabList, requires-body=1, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
+Kuwo-ModifyProfile = type=http-response, pattern=^https?://vip1.kuwo.cn/commercia/vipTab/myTab/base, requires-body=1, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
+
 [MITM]
-hostname = %APPEND% api-production.endel.io, mobile-api.adguard.org, *.intsig.net, dict.youdao.com, pan.baidu.com, mobile-new.chinaeew.cn, spclient.wg.spotify.com, *spclient.spotify.com
+hostname = %APPEND% api-production.endel.io, mobile-api.adguard.org, *.intsig.net, dict.youdao.com, pan.baidu.com, mobile-new.chinaeew.cn, spclient.wg.spotify.com, *spclient.spotify.com, *.kuwo.cn
